@@ -1,6 +1,6 @@
 {
-  "name": "react-sse",
-  "version": "1.0.1",
+  "name": "@sse-lib/react-sse",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sse-lib/react-sse"
+    "url": "git+https://github.com/sse-lib/react-sse.git"
   },
   "keywords": [
     "react",
@@ -17,5 +17,8 @@
   ],
   "author": "Vladislav shevliakov",
   "license": "MIT",
-  "homepage": "https://github.com/sse-lib/react-sse"
+  "homepage": "https://github.com/sse-lib/react-sse",
+  "bugs": {
+    "url": "https://github.com/sse-lib/react-sse/issues"
+  }
 }
