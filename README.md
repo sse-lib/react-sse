@@ -8,8 +8,16 @@ Learn more about SSE on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/S
 
 ## Installation
 
+Use `npm`
+
 ```bash
 npm i @sse-lib/react-sse
+```
+
+or `yarn`
+
+```bash
+yarn add @sse-lib/react-sse
 ```
 
 ## License
