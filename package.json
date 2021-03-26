@@ -1,6 +1,6 @@
 {
   "name": "@sse-lib/react-sse",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Working with SSE from React",
   "main": "dist/index.js",
   "scripts": {
