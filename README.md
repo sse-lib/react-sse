@@ -1,6 +1,6 @@
 # react-sse
 
-react-sse is a library for interacting with
+`react-sse` is a library for interacting with
 [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/EventSource)
 from your [react](https://reactjs.org/) application.
 
