@@ -1,9 +1,10 @@
 export type ConfigType = {
   url: string
-  withCredentials: boolean
+  withCredentials?: boolean
 }
 
-export const InitSSE = (config: ConfigType) => {
+export const InitServerEvents = (config: ConfigType) => {
   console.log('config: ', config)
+
   return config
 }

@@ -1,18 +1,23 @@
 import { createElement, useMemo, FC } from 'react'
 import { ReactSSEContext } from './contex'
-import { InitSSE, ConfigType } from './config'
+import { getEventSource } from './eventSource'
+import { InitServerEvents, ConfigType } from './config'
 
 type ProviderProps = {
   config: ConfigType
 }
 
 export const ServerEventsProvider: FC<ProviderProps> = ({ children, config }) => {
-  const state = useMemo(() => InitSSE(config), [config])
+  const options = InitServerEvents(config)
+
+  const eventSource = useMemo(() => getEventSource(options), [options])
+
+  console.log('Provider -> eventSource: ', eventSource)
 
   return createElement(
     ReactSSEContext.Provider,
     {
-      value: state
+      value: eventSource
     },
     children
   )
