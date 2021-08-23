@@ -2,11 +2,14 @@
   "name": "@sse-lib/react-sse",
   "version": "1.1.0",
   "description": "Working with SSE from React",
-  "main": "dist/index.js",
-  "types": "./index.d.ts",
+  "main": "lib/cjs/index.js",
+  "module": "/lib/esm/index.js",
+  "types": "lib/esm/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --extensions \".ts,.tsx\" --out-dir dist/",
+    "build:cjs": "babel src --extensions \".ts,.tsx\" --out-dir lib/cjs",
+    "build:esm": "tsc",
+    "build": "npm run build:esm && npm run build:cjs",
     "lint": "eslint src*/**/*.{js,ts,tsx}",
     "prettier": "prettier --write 'src/**/*.ts'"
   },
@@ -14,6 +17,9 @@
     "type": "git",
     "url": "https://github.com/sse-lib/react-sse"
   },
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "react",
     "reactjs",
@@ -25,6 +31,9 @@
   "homepage": "https://github.com/sse-lib/react-sse",
   "bugs": {
     "url": "https://github.com/sse-lib/react-sse/issues"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3 || ^17"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
