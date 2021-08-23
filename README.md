@@ -1,4 +1,5 @@
 # react-sse
+[![npm version](https://img.shields.io/npm/v/@sse-lib/react-sse?style=for-the-badge)](https://www.npmjs.com/package/@sse-lib/react-sse)
 
 `react-sse` is a library for interacting with
 [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/EventSource)
