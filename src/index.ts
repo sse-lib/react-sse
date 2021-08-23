@@ -1,3 +1,2 @@
-export { InitServerEvents } from './config'
-export { ServerEventsProvider } from './provider'
-export { useEventSource } from './useEventSource'
+export { EventsProvider } from './components/EventsProvider'
+export { useEventSource } from './hooks/useEventSource'

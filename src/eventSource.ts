@@ -1,9 +1,7 @@
-import { ConfigType } from './config'
-
 export type EventSource = {}
 
-export const getEventSource = (config: ConfigType) => {
-  const eventSource = new EventSource(config.url)
+export const getEventSource = (url: string) => {
+  const eventSource = new EventSource(url)
 
   eventSource.onmessage = onMessageHandler
 
