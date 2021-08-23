@@ -6,8 +6,7 @@
   "types": "./index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --extensions .ts --out-dir dist/",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
+    "build": "babel src --extensions \".ts,.tsx\" --out-dir dist/",
     "lint": "eslint src*/**/*.{js,ts,tsx}",
     "prettier": "prettier --write 'src/**/*.ts'"
   },
