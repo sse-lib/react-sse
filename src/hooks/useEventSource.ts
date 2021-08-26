@@ -1,18 +1,17 @@
-// import { useContext, useEffect } from 'react'
-// import { ReactSSEContext } from './contex'
+import { useContext } from 'react'
+import { ServerEventsContext } from '../components/Context'
 
-export const useEventSource = (event: string) => {
-  console.log('event: ', event)
-  // const eventSource = useContext(ReactSSEContext)
-  // console.log('eventSource -> useContext: ', eventSource)
+export const useEventSource = (eventType: string) => {
+  const eventSource = useContext(ServerEventsContext)
+  console.log('eventSource -> useContext: ', eventSource)
 
-  /*
+  eventSource?.state.startListenEvent(eventType)
+
   if (!eventSource) {
-    throw new Error(`To use 'useEventSource()' wrap your application in provider:
-        <ServerEventsProvider>
-          <App />
-        </ServerEventsProvider>
+    throw new Error(`To use "useEventSource()" wrap your application in provider:
+        <EventsProvider>
+          <YourApp />
+        </EventsProvider>
     `)
   }
-  */
 }

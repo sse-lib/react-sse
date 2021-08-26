@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import { FC, useMemo, useEffect } from 'react'
+import { CreateEventSource } from '../eventSource'
 import { ServerEventsContext } from './Context'
 
 interface EventsProviderProps {
@@ -13,5 +14,14 @@ export const EventsProvider: FC<EventsProviderProps> = ({
 }) => {
   const Context = ServerEventsContext
 
-  return <Context.Provider value={{ url, withCredentials }}>{children}</Context.Provider>
+  // const eventSource = useMemo(() => {}, [])
+  const eventSource = CreateEventSource(url, withCredentials)
+
+  useEffect(() => {
+    return () => {
+      eventSource.eventSource.close
+    }
+  }, [])
+
+  return <Context.Provider value={eventSource}>{children}</Context.Provider>
 }
