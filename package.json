@@ -1,6 +1,6 @@
 {
   "name": "@sse-lib/react-sse",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Working with SSE from React",
   "main": "lib/cjs/index.js",
   "module": "/lib/esm/index.js",
@@ -26,7 +26,7 @@
     "SSE",
     "Server Sent Events"
   ],
-  "author": "Vladislav shevliakov",
+  "author": "Vladislav Shevliakov",
   "license": "MIT",
   "homepage": "https://github.com/sse-lib/react-sse",
   "bugs": {

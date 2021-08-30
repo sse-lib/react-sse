@@ -1,61 +1,30 @@
-// type MapEvent = (event: Event) => void
-// type EventMap = Record<string, boolean>
-
-type eventState = {
-  // eventsMap: EventMap
-  eventsMap: string[]
-  startListenEvent(eventName: string): void
-  stopListenEvent(eventName: string): void
-  getState(): string[]
-}
+import EventBus, { Bus } from './eventsBus'
 
 export interface EventSource {
-  state: eventState
+  eventBus: Bus
   eventSource: globalThis.EventSource
 }
 
-const getListenerState = (): eventState => {
-  const state: eventState = {
-    eventsMap: [],
-    startListenEvent(eventName: string) {
-      if (this.eventsMap.includes(eventName)) return
-
-      this.eventsMap.push(eventName)
-
-      console.log('reg new event in:', this.eventsMap)
-    },
-    stopListenEvent(eventName: string) {
-      console.log('delete  event', eventName)
-    },
-    getState() {
-      return this.eventsMap
-    }
-  }
-
-  return state
-}
-
 export const CreateEventSource = (url: string, withCredentials: boolean): EventSource => {
-  console.log(`call "CreateEventSource"`)
-  const state = getListenerState()
+  console.log(`call "CreateEventSource()"`)
+
+  const eventBus = new EventBus()
 
   const eventSource = new EventSource(url, {
     withCredentials
   })
 
   eventSource.onmessage = (event: MessageEvent<any>) => {
-    const events = state.getState()
-
     try {
-      const { serverEventType } = JSON.parse(event.data)
-      console.log('received event: ', serverEventType)
+      const data = JSON.parse(event.data)
+      const serverEventType = `sse-lib/${data.serverEventType}`
 
-      console.log(events.includes(serverEventType))
-
-      if (!events.includes(serverEventType)) {
-        console.log(`event "${serverEventType}" doesn't exist`)
-      } else {
+      if (eventBus.has(serverEventType)) {
         console.log(`Event "${serverEventType}" exist!`)
+
+        eventBus.emit(serverEventType, data)
+      } else {
+        console.log(`event "${serverEventType}" doesn't exist`)
       }
     } catch (err) {
       console.warn(err)
@@ -67,7 +36,7 @@ export const CreateEventSource = (url: string, withCredentials: boolean): EventS
   }
 
   return {
-    state,
+    eventBus,
     eventSource
   }
 }

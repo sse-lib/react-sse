@@ -1,11 +1,11 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { ServerEventsContext } from '../components/Context'
 
 export const useEventSource = (eventType: string) => {
+  const formatEvent = `sse-lib/${eventType}`
+
   const eventSource = useContext(ServerEventsContext)
   console.log('eventSource -> useContext: ', eventSource)
-
-  eventSource?.state.startListenEvent(eventType)
 
   if (!eventSource) {
     throw new Error(`To use "useEventSource()" wrap your application in provider:
@@ -14,4 +14,17 @@ export const useEventSource = (eventType: string) => {
         </EventsProvider>
     `)
   }
+
+  const handleEventEmit = (arg: any): void => {
+    console.log('inside a hook', arg)
+  }
+
+  useEffect(() => {
+    const subscriber = eventSource.eventBus.subscribeOn(formatEvent, handleEventEmit)
+    console.log(eventSource.eventBus)
+
+    return () => {
+      eventSource.eventBus.unsubscribe(formatEvent, subscriber)
+    }
+  }, [])
 }
