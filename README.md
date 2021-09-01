@@ -20,6 +20,21 @@ or `yarn`
 ```bash
 yarn add @sse-lib/react-sse
 ```
+## Usage
+Wrap your application in a provider
+```javascript
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "./App"
+import { EventsProvider } from "@sse-lib/react-sse"
+
+ReactDOM.render(
+  <EventsProvider url="https://example.com/sse">
+    <App />
+  </EventsProvider>,
+  document.getElementById("root")
+)
+```
 
 ## License
 
