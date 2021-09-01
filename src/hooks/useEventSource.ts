@@ -1,7 +1,15 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ServerEventsContext } from '../components/Context'
 
-export const useEventSource = (eventType: string) => {
+export interface ProcessingResult<TData = any> {
+  data: TData | undefined
+  unsubscribe: () => void
+}
+
+export const useEventSource = (eventType: string): ProcessingResult => {
+  const [subscriberID, setSubscriberID] = useState<number>(0)
+  const [eventData, setEventData] = useState()
+
   const formatEvent = `sse-lib/${eventType}`
 
   const eventSource = useContext(ServerEventsContext)
@@ -15,16 +23,23 @@ export const useEventSource = (eventType: string) => {
     `)
   }
 
-  const handleEventEmit = (arg: any): void => {
-    console.log('inside a hook', arg)
+  const unsubscribe = () => eventSource.eventBus.unsubscribe(formatEvent, subscriberID)
+
+  const handleEventEmit = (data: any): void => {
+    setEventData(data)
   }
 
   useEffect(() => {
-    const subscriber = eventSource.eventBus.subscribeOn(formatEvent, handleEventEmit)
+    const id = eventSource.eventBus.subscribeOn(formatEvent, handleEventEmit)
     console.log(eventSource.eventBus)
-
+    setSubscriberID(id)
     return () => {
-      eventSource.eventBus.unsubscribe(formatEvent, subscriber)
+      unsubscribe()
     }
   }, [])
+
+  return {
+    data: eventData,
+    unsubscribe
+  }
 }

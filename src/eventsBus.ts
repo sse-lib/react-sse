@@ -5,7 +5,7 @@ export interface Bus {
   eventList: Map<string, any>
   subscribeOn(eventName: string, fn: (args: any) => void): number
   unsubscribe(eventName: string, subscriberID: number): void
-  emit(eventName: string, ...args: any[]): void
+  publish(eventName: string, ...args: any[]): void
   has(eventName: string): boolean
 }
 
@@ -36,7 +36,7 @@ class EventBus implements Bus {
     }
   }
 
-  public emit(event: string, ...args: any[]): void {
+  public publish(event: string, ...args: any[]): void {
     const eventItem = this.eventList.get(event)
     if (!eventItem.length) return
 

@@ -6,32 +6,50 @@ export interface EventSource {
 }
 
 export const CreateEventSource = (url: string, withCredentials: boolean): EventSource => {
-  console.log(`call "CreateEventSource()"`)
-
   const eventBus = new EventBus()
 
   const eventSource = new EventSource(url, {
     withCredentials
   })
 
-  eventSource.onmessage = (event: MessageEvent<any>) => {
+  eventSource.onmessage = (event: MessageEvent<any>): void => {
     try {
       const data = JSON.parse(event.data)
-      const serverEventType = `sse-lib/${data.serverEventType}`
+
+      const keyField = data.serverEventType
+      if (!keyField) {
+        if (process.env.NODE_ENV !== 'production') {
+          throw new Error(`
+          Field "serverEventType" does not exist!
+          Each event received is expected to have a "serverEventType" field
+          {
+            ...
+            "serverEventType": "name of received event"
+            ...
+          }
+        `)
+        }
+
+        return
+      }
+
+      const serverEventType = `sse-lib/${keyField}`
+
+      console.log('new event:', event)
 
       if (eventBus.has(serverEventType)) {
-        console.log(`Event "${serverEventType}" exist!`)
-
-        eventBus.emit(serverEventType, data)
+        eventBus.publish(serverEventType, data)
       } else {
-        console.log(`event "${serverEventType}" doesn't exist`)
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn(`No hooks are expecting "${data.serverEventType}" event`)
+        }
       }
     } catch (err) {
       console.warn(err)
     }
   }
 
-  eventSource.onerror = (err) => {
+  eventSource.onerror = (err): void => {
     console.warn(err)
   }
 
